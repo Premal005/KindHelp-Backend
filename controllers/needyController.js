@@ -147,6 +147,24 @@ const getRecentMedicines = async (req, res) => {
 };
 
 
+// In needyController.js
+const getContactDetails = async (req, res) => {
+  try {
+    const { emailid } = req.params;
+    const doc = await ProjDonorCollection.findOne({ emailid });
+    if (!doc) return res.status(404).json({ status: false, msg: "No donor found" });
+
+    res.json({
+      name: doc.name,
+      email: doc.emailid,
+      phone: doc.contact,
+      address: doc.curaddress,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ status: false, msg: "Server error" });
+  }
+};
 
 
-module.exports = { uploadFront, uploadBack, saveNeedy, fetchNeedy, medfinder, getRecentMedicines };
+module.exports = { uploadFront, uploadBack, saveNeedy, fetchNeedy, medfinder, getRecentMedicines,getContactDetails };

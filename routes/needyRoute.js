@@ -16,6 +16,8 @@ appRouter.post("/med-finder",obj.medfinder);
 
 appRouter.post("/recent-medicines",obj.getRecentMedicines);
 
+appRouter.get("/contact-details/:emailid", obj.getContactDetails);
+
 module.exports=appRouter;
 
 
