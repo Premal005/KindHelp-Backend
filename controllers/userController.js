@@ -41,38 +41,41 @@ function doSignupPostWopic(req,resp)
       });   
  } 
 
- function med(req,resp)
- {
-    AvMed.countDocuments({})
-    .then((count) => {
-      resp.json({ status: true, msg: "Count retrieved", count });
-    })
-    .catch((err) => {
-      resp.json({ status: false, msg: err.message });
-    });   
- } 
+ // Count donated medicines
+async function med(req, res) {
+  console.log("HIT /user/meddonated");
+  try {
+    const count = await AvMed.countDocuments({});
+    console.log("Sending /meddonated:", count);
+    return res.json({ status: true, msg: "Count retrieved", count });
+  } catch (err) {
+    console.error("med error:", err.message);
+    return res.status(500).json({ status: false, msg: err.message });
+  }
+}
 
-  function countcities(req,resp)
- {
-    CitCt.countDocuments({})
-    .then((count) => {
-      resp.json({ status: true, msg: "Count retrieved", count });
-    })
-    .catch((err) => {
+// Count unique cities from donors
+function countcities(req,resp) { 
+  CitCt.countDocuments({}) .then((count) => { 
+    resp.json({ status: true, msg: "Count retrieved", count }); }) 
+    .catch((err) => { 
       resp.json({ status: false, msg: err.message });
-    });   
- } 
+     });
+     } 
 
-   function countneedies(req,resp)
- {
-    NdyCt.countDocuments({})
-    .then((count) => {
-      resp.json({ status: true, msg: "Count retrieved", count });
-    })
-    .catch((err) => {
-      resp.json({ status: false, msg: err.message });
-    });   
- } 
+// Count needy requests
+async function countneedies(req, res) {
+  console.log("HIT /user/countneedies");
+  try {
+    const count = await NdyCt.countDocuments({});
+    console.log("Sending /countneedies:", count);
+    return res.json({ status: true, msg: "Count retrieved", count });
+  } catch (err) {
+    console.error("countneedies error:", err.message);
+    return res.status(500).json({ status: false, msg: err.message });
+  }
+}
+
 
   async function getNameByEmail(req, res) {
     const { email, type } = req.query;
