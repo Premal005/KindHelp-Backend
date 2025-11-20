@@ -39,7 +39,7 @@ const uploadFront = async (req, res) => {
     const savePath = path.join(outputFolder, "front_" + Date.now() + path.extname(file.name));
     await file.mv(savePath);
 
-    const model = genAI.getGenerativeModel({ model: "models/gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "models/gemini-2.5-flash" });
     const imageBytes = fs.readFileSync(savePath).toString("base64");
     const result = await model.generateContent([
       {
