@@ -39,7 +39,7 @@ const uploadFront = async (req, res) => {
     const savePath = path.join(outputFolder, "front_" + Date.now() + path.extname(file.name));
     await file.mv(savePath);
 
-    const model = genAI.getGenerativeModel({ model: "models/gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "models/gemini-3.6-flash" });
     const imageBytes = fs.readFileSync(savePath).toString("base64");
     const result = await model.generateContent([
       {
@@ -56,7 +56,7 @@ const uploadFront = async (req, res) => {
     res.json({ status: true, extracted, imageUrl: savePath });
   } catch (err) {
     console.error(err);
-    res.json({ status: false, msg: "Front Aadhaar upload failed" });
+    res.json({ status: false, msg: "Front Aadhaar upload failed", error: err.message });
   }
 };
 
@@ -66,7 +66,7 @@ const uploadBack = async (req, res) => {
     const savePath = path.join(outputFolder, "back_" + Date.now() + path.extname(file.name));
     await file.mv(savePath);
 
-    const model = genAI.getGenerativeModel({ model: "models/gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "models/gemini-3.6-flash" });
     const imageBytes = fs.readFileSync(savePath).toString("base64");
     const result = await model.generateContent([
       {
